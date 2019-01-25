@@ -5,6 +5,7 @@ package com.crossover.techtrial.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +14,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author kshah
@@ -29,9 +34,12 @@ public class Member implements Serializable{
   Long id;
 
   @Column(name = "name")
+  @Length(min = 2, max = 50, message = "The name must be composed by 2 - 100 characters")
+  @Pattern(regexp = "^[a-zA-Z]+[A-Za-z ,.'-]+$", message = "The name format is not valid")	
   String name;
 
   @Column(name = "email")
+  @NotEmpty
   String email;
   
   @Enumerated(EnumType.STRING)

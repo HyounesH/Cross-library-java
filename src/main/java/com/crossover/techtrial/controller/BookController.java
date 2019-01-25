@@ -30,6 +30,7 @@ public class BookController {
    */
   @GetMapping(path ="/api/book")
   public ResponseEntity<List<Book>> getBooks() {
+	  
     return ResponseEntity.ok(bookService.getAll());
   }
 

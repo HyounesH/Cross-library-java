@@ -6,7 +6,11 @@ package com.crossover.techtrial.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.crossover.techtrial.dto.TopMemberDTO;
 import com.crossover.techtrial.model.Member;
 import com.crossover.techtrial.service.MemberService;
@@ -33,7 +38,12 @@ public class MemberController {
    * PLEASE DO NOT CHANGE SIGNATURE OR METHOD TYPE OF END POINTS
    */
   @PostMapping(path = "/api/member")
-  public ResponseEntity<Member> register(@RequestBody Member p) {
+  public ResponseEntity<Member> register(@Valid @RequestBody Member p) {
+	//check if email is already exist
+	List<Member> membresWithSameMail=memberService.checkMail(p.getEmail());
+	if(membresWithSameMail.size()!=0) {
+		return ResponseEntity.badRequest().build();
+	}
     return ResponseEntity.ok(memberService.save(p));
   }
   
@@ -71,11 +81,13 @@ public class MemberController {
       @RequestParam(value="startTime", required=true) @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
       @RequestParam(value="endTime", required=true) @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime){
     List<TopMemberDTO> topDrivers = new ArrayList<>();
-    /**
-     * Your Implementation Here. 
-     * 
-     */
+ 
+    //check if startTime is bigger than endTime
     
+    if(startTime.compareTo(endTime)>=0) {
+    	 return ResponseEntity.badRequest().build();
+    }
+    topDrivers=memberService.getTopFiveMembers(startTime, endTime, PageRequest.of(0,5));
     return ResponseEntity.ok(topDrivers);
     
   }
