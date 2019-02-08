@@ -1,4 +1,5 @@
-
+[![Build Status](https://img.shields.io/travis/pwittchen/money-transfer-api.svg?branch=master&style=flat-square)](https://travis-ci.org/HyounesH/blackfriday)
+[![codecov](https://img.shields.io/codecov/c/github/pwittchen/money-transfer-api/master.svg?style=flat-square&label=coverage)](https://codecov.io/gh/embenzekri/blackfriday/branch/master)
 # Project Assessment
 
 Cross-Library is a web application for a local community library and is developed by a startup company. Cross-Library allows its community people to register as members. Librarian can issue books to a registered member only. Only one book can be issued in one transaction. As book issuance is possible only from the authorized terminal so no need to have separate authentication and authorization of librarian.
