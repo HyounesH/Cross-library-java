@@ -6,7 +6,7 @@ Cross-Library is a web application for a local community library and is develope
 
 # Notes
 
-* Each member should have a valid unique email address. No two members can have the same email address.
+* Each member should have a valid unique email address and No two members can have the same email address.
 * Member is not allowed to issue a book which is already issued to someone and should return HTTP Status code 403.
 * Member trying to issue a book which does not exist in our database, API should return HTTP Status code 404.
 * After returning the book and completing the transaction by updating date of return, Any subsequent request to return for the same transaction-id should return HTTP Status Code 403. Valid value of Date Of Return field means books are returned.
